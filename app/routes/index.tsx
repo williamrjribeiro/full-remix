@@ -1,8 +1,11 @@
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import MuiLink from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Link } from "@remix-run/react";
 
@@ -44,7 +47,7 @@ function Hero() {
               p: { xs: 3, md: 20 },
             }}
           >
-            <Typography component="h1" variant="h1" color="inherit" gutterBottom sx={{m: 0}}>
+            <Typography component="h1" variant="h1" color="inherit" gutterBottom sx={{ m: 0 }}>
               MUI 5 + Remix Grunge
             </Typography>
           </Box>
@@ -61,18 +64,18 @@ export default function Index() {
     <Container component="main">
       <Hero />
 
-      {user ? (
-        <Link to="/notes">View Notes for {user.email}</Link>
-      ) : (
-        <div>
-          <Button variant="outlined">Sign up</Button>
-          <Button variant="contained">Log in</Button>
-          <Link to="/join">Sign up</Link>
-          <Link to="/login">Log In</Link>
-        </div>
-      )}
+      <Box display="flex" justifyContent="center" mb={4}>
+        {user ? (
+          <Link to="/notes">View Notes for {user.email}</Link>
+        ) : (
+          <Stack spacing={2} direction="row">
+            <Button variant="outlined" component={Link} to="/join">Sign up</Button>
+            <Button variant="contained" component={Link} to="/login">Log in</Button>
+          </Stack>
+        )}
+      </Box>
 
-      <div>
+      <Box display="flex" justifyContent="center">
         {[
           {
             src: "https://user-images.githubusercontent.com/1500684/157991167-651c8fc5-2f72-4afa-94d8-2520ecbc5ebc.svg",
@@ -125,11 +128,11 @@ export default function Index() {
             href: "https://typescriptlang.org",
           },
         ].map((img) => (
-          <a key={img.href} href={img.href}>
-            <img alt={img.alt} src={img.src} />
-          </a>
+          <MuiLink component={IconButton} key={img.href} href={img.href}>
+            <img alt={img.alt} src={`${img.alt} logo`} width={64} height={64} />
+          </MuiLink>
         ))}
-      </div>
+      </Box>
     </Container >
   );
 }
