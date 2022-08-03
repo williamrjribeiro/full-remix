@@ -1,7 +1,7 @@
 import * as React from "react";
 import { RemixBrowser } from "@remix-run/react";
 import { hydrateRoot } from "react-dom/client";
-import MuiRoot from "./mui";
+import MuiRoot from "./components/mui/index.client";
 
 function hydrate() {
   React.startTransition(() => {
