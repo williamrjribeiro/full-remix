@@ -25,6 +25,11 @@
   "dependencies": {
     "@architect/architect": "latest",
     "@architect/functions": "latest",
+    "@emotion/cache": "latest",
+    "@emotion/react": "latest",
+    "@emotion/server": "latest",
+    "@emotion/styled": "latest",
+    "@mui/material": "latest",
     "@remix-run/architect": "latest",
     "@remix-run/node": "latest",
     "@remix-run/react": "latest",
