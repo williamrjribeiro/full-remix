@@ -1,13 +1,16 @@
 import * as React from "react";
 import { RemixBrowser } from "@remix-run/react";
 import { hydrateRoot } from "react-dom/client";
+import MuiRoot from "./mui";
 
 function hydrate() {
   React.startTransition(() => {
     hydrateRoot(
       document,
       <React.StrictMode>
-        <RemixBrowser />
+        <MuiRoot>
+          <RemixBrowser />
+        </MuiRoot>
       </React.StrictMode>
     );
   });
