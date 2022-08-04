@@ -129,7 +129,7 @@ export default function Index() {
           },
         ].map((img) => (
           <MuiLink component={IconButton} key={img.href} href={img.href}>
-            <img alt={img.alt} src={`${img.alt} logo`} width={64} height={64} />
+            <img alt={`${img.alt} logo`} src={img.src} width={64} height={64} />
           </MuiLink>
         ))}
       </Box>
