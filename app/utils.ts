@@ -1,5 +1,6 @@
-import { useMatches } from "@remix-run/react";
 import { useMemo } from "react";
+import { useMatches } from "@remix-run/react";
+import invariant from "tiny-invariant";
 
 import type { User } from "~/models/user.server";
 
@@ -68,4 +69,19 @@ export function useUser(): User {
 
 export function validateEmail(email: unknown): email is string {
   return typeof email === "string" && email.length > 3 && email.includes("@");
+}
+
+export type EnvVars = {
+  userPoolId: string;
+  userPoolWebClientId: string;
+}
+
+export function getEnvVars(): EnvVars {
+  invariant(process.env.USER_POOL_ID, "USER_POOL_ID must be set");
+  invariant(process.env.USER_POOL_WEB_CLIENT_ID, "USER_POOL_WEB_CLIENT_ID must be set");
+
+  return {
+    userPoolId: process.env.USER_POOL_ID,
+    userPoolWebClientId: process.env.USER_POOL_WEB_CLIENT_ID
+  };
 }
