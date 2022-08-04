@@ -25,6 +25,8 @@
   "dependencies": {
     "@architect/architect": "latest",
     "@architect/functions": "latest",
+    "@aws-amplify/ui-components": "latest",
+    "@aws-amplify/ui-react": "latest",
     "@emotion/cache": "latest",
     "@emotion/react": "latest",
     "@emotion/server": "latest",
@@ -34,6 +36,7 @@
     "@remix-run/node": "latest",
     "@remix-run/react": "latest",
     "@remix-run/server-runtime": "latest",
+    "aws-amplify": "latest",
     "bcryptjs": "2.4.3",
     "cuid": "^2.1.8",
     "isbot": "^3.5.0",
@@ -42,6 +45,7 @@
     "tiny-invariant": "^1.2.0"
   },
   "devDependencies": {
+    
     "@faker-js/faker": "^7.3.0",
     "@remix-run/dev": "latest",
     "@remix-run/eslint-config": "latest",
