@@ -1,15 +1,28 @@
-import type {
-  ActionFunction,
-  LoaderFunction,
-  MetaFunction,
-} from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
-import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
-import * as React from "react";
+import { useCallback, useEffect } from "react";
+import {
+  Authenticator,
+  useAuthenticator,
+} from "@aws-amplify/ui-react";
+import type { ActionFunction, LinksFunction, LoaderFunction} from "@remix-run/node";
+import { redirect } from "@remix-run/node";
+import { json, } from "@remix-run/node";
+import { useFetcher } from "@remix-run/react";
+import styles from "@aws-amplify/ui-react/styles.css";
 
-import { createUserSession, getUserId } from "~/session.server";
-import { verifyLogin } from "~/models/user.server";
-import { safeRedirect, validateEmail } from "~/utils";
+import { createUserSession, getUserId } from "../session.server";
+
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: "stylesheet",
+      href: styles,
+    },
+    {
+      rel: "stylesheet",
+      href: "https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css",
+    },
+  ];
+};
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -19,172 +32,82 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 interface ActionData {
   errors?: {
+    accessToken?: string;
+    idToken?: string;
     email?: string;
-    password?: string;
   };
 }
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
+  // for (const pair of formData.entries()) {
+  //   console.log(`[login.action] formData: ${pair[0]}, ${pair[1]}`);
+  // }
+  const accessToken = formData.get("accessToken");
+  const idToken = formData.get("idToken");
   const email = formData.get("email");
-  const password = formData.get("password");
-  const redirectTo = safeRedirect(formData.get("redirectTo"));
-  const remember = formData.get("remember");
 
-  if (!validateEmail(email)) {
+  if (typeof accessToken !== "string" || accessToken.length === 0) {
     return json<ActionData>(
-      { errors: { email: "Email is invalid" } },
+      { errors: { accessToken: "Could not obtain accessToken" } },
       { status: 400 }
     );
   }
 
-  if (typeof password !== "string" || password.length === 0) {
+  if (typeof idToken !== "string" || idToken.length === 0) {
     return json<ActionData>(
-      { errors: { password: "Password is required" } },
+      { errors: { idToken: "Could not obtain idToken" } },
       { status: 400 }
     );
   }
 
-  if (password.length < 8) {
+  if (typeof email !== "string" || email.length === 0) {
     return json<ActionData>(
-      { errors: { password: "Password is too short" } },
+      { errors: { email: "Could not obtain email" } },
       { status: 400 }
     );
   }
 
-  const user = await verifyLogin(email, password);
 
-  if (!user) {
-    return json<ActionData>(
-      { errors: { email: "Invalid email or password" } },
-      { status: 400 }
-    );
-  }
-
-  return createUserSession({
+  return await createUserSession({
     request,
-    userId: user.id,
-    remember: remember === "on" ? true : false,
-    redirectTo,
+    userId: `email#${email}`,
+    accessToken,
+    idToken,
+    redirectTo: "/notes",
   });
 };
 
-export const meta: MetaFunction = () => {
-  return {
-    title: "Login",
-  };
-};
+export function Login() {
+  const fetcher = useFetcher();
+  const { user } = useAuthenticator((context) => [context.user]);
 
-export default function LoginPage() {
-  const [searchParams] = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") || "/notes";
-  const actionData = useActionData() as ActionData;
-  const emailRef = React.useRef<HTMLInputElement>(null);
-  const passwordRef = React.useRef<HTMLInputElement>(null);
-
-  React.useEffect(() => {
-    if (actionData?.errors?.email) {
-      emailRef.current?.focus();
-    } else if (actionData?.errors?.password) {
-      passwordRef.current?.focus();
+  const setUserSessionInfo = useCallback((user: any) => {
+    if (user && fetcher.type === "init") {
+      console.log("[login.setUserSessionInfo] user:", user);
+      const { accessToken, idToken } = user.signInUserSession;
+      fetcher.submit(
+        {
+          accessToken: accessToken.jwtToken,
+          idToken: idToken.jwtToken,
+          email: user.attributes.email
+        },
+        { method: "post" }
+      );
     }
-  }, [actionData]);
+  }, [fetcher]);
+
+  useEffect(() => {
+    // console.log("[login.useEffect] user:", user);
+    setUserSessionInfo(user);
+  }, [user, setUserSessionInfo]);
+
 
   return (
-    <div className="flex min-h-full flex-col justify-center">
-      <div className="mx-auto w-full max-w-md px-8">
-        <Form method="post" className="space-y-6" noValidate>
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email address
-            </label>
-            <div className="mt-1">
-              <input
-                ref={emailRef}
-                id="email"
-                required
-                autoFocus={true}
-                name="email"
-                type="email"
-                autoComplete="email"
-                aria-invalid={actionData?.errors?.email ? true : undefined}
-                aria-describedby="email-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-              />
-              {actionData?.errors?.email && (
-                <div className="pt-1 text-red-700" id="email-error">
-                  {actionData.errors.email}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
-            <div className="mt-1">
-              <input
-                id="password"
-                ref={passwordRef}
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                aria-invalid={actionData?.errors?.password ? true : undefined}
-                aria-describedby="password-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-              />
-              {actionData?.errors?.password && (
-                <div className="pt-1 text-red-700" id="password-error">
-                  {actionData.errors.password}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <input type="hidden" name="redirectTo" value={redirectTo} />
-          <button
-            type="submit"
-            className="w-full rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
-          >
-            Log in
-          </button>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember"
-                name="remember"
-                type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-              />
-              <label
-                htmlFor="remember"
-                className="ml-2 block text-sm text-gray-900"
-              >
-                Remember me
-              </label>
-            </div>
-            <div className="text-center text-sm text-gray-500">
-              Don't have an account?{" "}
-              <Link
-                className="text-blue-500 underline"
-                to={{
-                  pathname: "/join",
-                  search: searchParams.toString(),
-                }}
-              >
-                Sign up
-              </Link>
-            </div>
-          </div>
-        </Form>
-      </div>
-    </div>
+    <Authenticator>
+      {() => (<h1>Signing in...</h1>)}
+    </Authenticator>
   );
 }
+
+export default Login;
