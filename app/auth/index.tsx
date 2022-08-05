@@ -1,15 +1,21 @@
-import * as React from "react";
 import { Amplify } from 'aws-amplify';
-import type { EnvVars } from "~/utils";
+import { useEffect } from 'react';
+import type { RootLoaderData } from '~/root';
+import { useMatchesData } from "~/utils";
 
-export default function initAuth({userPoolId, userPoolWebClientId}: EnvVars) {
-  const config = {
-    Auth: {
-      region: 'us-east-1',
-      userPoolId,
-      userPoolWebClientId,
-    }
-  };
-  
-  Amplify.configure({ ...config });
+const AmplifyInit = () => {
+  const { ENV } = useMatchesData("root") as RootLoaderData;
+
+  useEffect(() => {
+    Amplify.configure({
+      Auth: {
+        userPoolId: ENV.userPoolId,
+        userPoolWebClientId: ENV.userPoolWebClientId
+      }
+    })
+  }, [ENV])
+
+  return null;
 }
+
+export default AmplifyInit;

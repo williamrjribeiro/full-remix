@@ -2,22 +2,17 @@ import type {
   LinksFunction,
 } from "@remix-run/node";
 import {
+  Links, Meta,
   LiveReload, Outlet, Scripts,
   ScrollRestoration
 } from "@remix-run/react";
 import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { getUser } from '~/session.server';
-// AMPLIFY
-import { Amplify } from "aws-amplify";
 import Document from "./components/mui/document";
-
-Amplify.configure({
-  Auth: {
-    userPoolId: "us-east-1_HGsxcS4C7",
-    userPoolWebClientId: "22ca2vu2ajvotiqchfms8sbutu"
-  }
-});
+import type { EnvVars} from "./utils";
+import { getEnvVars } from "./utils";
+import AmplifyInit from "./auth";
 
 export const links: LinksFunction = () => {
   return [
@@ -26,22 +21,25 @@ export const links: LinksFunction = () => {
   ];
 };
 
-type LoaderData = {
+export type RootLoaderData = {
   user: Awaited<ReturnType<typeof getUser>>;
+  ENV: EnvVars;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request);
-  console.log("[routes.index.loader] user:", user);
-  return json<LoaderData>({ user });
+  const data = { user, ENV: getEnvVars() };
+  console.log("[routes.index.loader] data:", data);
+  return json<RootLoaderData>(data);
 };
 
 export default function App() {
   return (
-    <Document title="Remix Notes">
+    <Document title="Remix Notes" ExtraLinks={Links} ExtraMeta={Meta}>
       <Outlet />
       <ScrollRestoration />
       <Scripts />
+      <AmplifyInit />
       <LiveReload />
     </Document>
   );
