@@ -37,7 +37,6 @@
     "@remix-run/react": "latest",
     "@remix-run/server-runtime": "latest",
     "aws-amplify": "latest",
-    "aws-appsync": "^4.1.7",
     "bcryptjs": "2.4.3",
     "cuid": "^2.1.8",
     "isbot": "^3.5.0",

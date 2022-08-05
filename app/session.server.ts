@@ -2,7 +2,6 @@ import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import type { User } from "~/models/user.server";
 import { getUserById } from "~/models/user.server";
-export * from "aws-appsync";
 
 invariant(process.env.SESSION_SECRET, "SESSION_SECRET must be set");
 const USER_SESSION_KEY = "userId";
