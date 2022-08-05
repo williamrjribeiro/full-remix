@@ -51,7 +51,7 @@ function isUser(user: any): user is User {
 
 export function useOptionalUser(): User | undefined {
   const data = useMatchesData("root");
-  console.log("[useOptionalUser] data:", data);
+  // console.log("[useOptionalUser] data:", data);
   if (!data || !isUser(data.user)) {
     return undefined;
   }
@@ -59,7 +59,7 @@ export function useOptionalUser(): User | undefined {
 }
 
 export function useUser(): User {
-  console.log("[useUser]");
+  // console.log("[useUser]");
   const maybeUser = useOptionalUser();
   if (!maybeUser) {
     throw new Error(

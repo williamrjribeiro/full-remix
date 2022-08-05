@@ -73,7 +73,7 @@ function Login() {
 
   const setUserSessionInfo = useCallback((user: any) => {
     if (user && fetcher.type === "init") {
-      console.log("[login.setUserSessionInfo] user:", user);
+      // console.log("[login.setUserSessionInfo] user:", user);
       const { accessToken, idToken } = user.signInUserSession;
       fetcher.submit(
         {

@@ -31,7 +31,6 @@ type LoaderData = {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  console.log("[routes.index.loader] LOADING...");
   const user = await getUser(request);
   console.log("[routes.index.loader] user:", user);
   return json<LoaderData>({ user });

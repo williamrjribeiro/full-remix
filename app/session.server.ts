@@ -30,20 +30,20 @@ export async function getUserId(
   const session = await getSession(request);
   const sessionInfo = session.get(USER_SESSION_KEY);
   // console.log("[getUserId] sessionInfo:", sessionInfo);
-  console.log("[getUserId] sessionInfo.userId:", sessionInfo?.userId);
+  // console.log("[getUserId] sessionInfo.userId:", sessionInfo?.userId);
   return sessionInfo ? sessionInfo.userId : undefined;
 }
 
 export async function getUser(request: Request) {
   const userId = await getUserId(request);
-  console.log("[getUser] userId:", userId);
+  // console.log("[getUser] userId:", userId);
   if (userId === undefined) return null;
 
   const user = await getUserById(userId);
-  console.log("[getUser] user:", user);
+  // console.log("[getUser] user:", user);
   if (user) return user;
 
-  console.warn('[getUser] Unregistered user! userId:', userId)
+  // console.warn('[getUser] Unregistered user! userId:', userId)
   // TODO: Fix this infinite loop!
   // throw await join();
   throw await logout(request);
@@ -87,7 +87,7 @@ export async function createUserSession({
   idToken: string;
   redirectTo: string;
 }) {
-  console.log("[createUserSession] userId:", userId);
+  // console.log("[createUserSession] userId:", userId);
   const session = await getSession(request);
   session.set(USER_SESSION_KEY, { userId, accessToken, idToken });
   return redirect(redirectTo, {
