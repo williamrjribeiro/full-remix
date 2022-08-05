@@ -10,8 +10,6 @@ import { json } from '@remix-run/node';
 import { getUser } from '~/session.server';
 // AMPLIFY
 import { Amplify } from "aws-amplify";
-import "@aws-amplify/ui-react/styles.css";
-import { Authenticator } from "@aws-amplify/ui-react";
 import Document from "./components/mui/document";
 
 Amplify.configure({
@@ -42,12 +40,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function App() {
   return (
     <Document title="Remix Notes">
-      <Authenticator.Provider>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-      </Authenticator.Provider>
+      <Outlet />
+      <ScrollRestoration />
+      <Scripts />
+      <LiveReload />
     </Document>
   );
 }

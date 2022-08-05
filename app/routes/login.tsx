@@ -3,7 +3,7 @@ import {
   Authenticator,
   useAuthenticator,
 } from "@aws-amplify/ui-react";
-import type { ActionFunction, LinksFunction, LoaderFunction} from "@remix-run/node";
+import type { ActionFunction, LinksFunction, LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { json, } from "@remix-run/node";
 import { useFetcher } from "@remix-run/react";
@@ -11,18 +11,7 @@ import styles from "@aws-amplify/ui-react/styles.css";
 
 import { createUserSession, getUserId } from "../session.server";
 
-export const links: LinksFunction = () => {
-  return [
-    {
-      rel: "stylesheet",
-      href: styles,
-    },
-    {
-      rel: "stylesheet",
-      href: "https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css",
-    },
-  ];
-};
+export const links: LinksFunction = () => ([{ rel: "stylesheet", href: styles }]);
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
@@ -78,7 +67,7 @@ export const action: ActionFunction = async ({ request }) => {
   });
 };
 
-export function Login() {
+function Login() {
   const fetcher = useFetcher();
   const { user } = useAuthenticator((context) => [context.user]);
 
@@ -104,10 +93,16 @@ export function Login() {
 
 
   return (
-    <Authenticator>
-      {() => (<h1>Signing in...</h1>)}
-    </Authenticator>
+    <Authenticator.Provider>
+      <Authenticator>
+        {() => (<h1>Signing in...</h1>)}
+      </Authenticator>
+    </Authenticator.Provider>
   );
 }
 
-export default Login;
+const LoginContainer = () => (
+  <Authenticator.Provider><Login ></Login></Authenticator.Provider>
+)
+
+export default LoginContainer;
