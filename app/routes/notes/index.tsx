@@ -1,12 +1,18 @@
-import { Link } from "@remix-run/react";
+import Link from "@mui/material/Link";
+import { Link as RemixLink } from "@remix-run/react";
+import { withTranslation } from 'react-i18next';
 
-export default function NoteIndexPage() {
-  return (
-    <p>
-      No note selected. Select a note on the left, or{" "}
-      <Link to="new" className="text-blue-500 underline">
-        create a new note.
-      </Link>
-    </p>
-  );
-}
+export let handle = {
+  i18n: "notes",
+};
+
+const NoteIndexPage = withTranslation("notes")(({ t }) => (
+  <p>
+    {t('noSelection')}
+    <Link component={RemixLink} to="new">
+      {t('noSelection2')}
+    </Link>
+  </p>
+))
+
+export default NoteIndexPage

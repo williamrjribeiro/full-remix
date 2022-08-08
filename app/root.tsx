@@ -33,7 +33,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request);
   const locale = await i18nextServer.getLocale(request);
   const data = { user, locale, ENV: getEnvVars() };
-  console.log("[routes.index.loader] data:", data);
+
+  // console.log("[routes.index.loader] data:", data);
   return json<RootLoaderData>(data);
 };
 
