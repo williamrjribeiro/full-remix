@@ -8,6 +8,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Link } from "@remix-run/react";
+import { useTranslation } from "react-i18next";
 
 import { useOptionalUser } from "~/utils";
 
@@ -59,10 +60,15 @@ function Hero() {
 
 export default function Index() {
   const user = useOptionalUser();
+  const { t } = useTranslation();
 
   return (
     <Container component="main">
       <Hero />
+
+      <Typography component="h2" variant="h4" textAlign="center" mb={4}>
+        {t('appName')}
+      </Typography>
 
       <Box display="flex" justifyContent="center" mb={4}>
         {user ? (

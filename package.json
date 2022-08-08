@@ -39,9 +39,15 @@
     "aws-amplify": "latest",
     "bcryptjs": "2.4.3",
     "cuid": "^2.1.8",
+    "i18next": "^21.8.16",
+    "i18next-browser-languagedetector": "^6.1.4",
+    "i18next-fs-backend": "^1.1.5",
+    "i18next-http-backend": "^1.4.1",
     "isbot": "^3.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-i18next": "^11.18.3",
+    "remix-i18next": "^4.1.1",
     "tiny-invariant": "^1.2.0"
   },
   "devDependencies": {
@@ -55,6 +61,7 @@
     "@types/architect__functions": "latest",
     "@types/bcryptjs": "latest",
     "@types/eslint": "latest",
+    "@types/i18next-fs-backend": "^1.1.2",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "^2.0.0",

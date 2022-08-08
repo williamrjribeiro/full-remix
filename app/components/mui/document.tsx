@@ -5,6 +5,8 @@ import ClientStyleContext from './ClientStyleContext';
 import { theme } from './theme';
 interface DocumentProps {
   children: React.ReactNode;
+  lang: string;
+  dir: string;
   title?: string;
   ExtraLinks?: React.ComponentType
   ExtraMeta?: React.ComponentType
@@ -14,9 +16,11 @@ const NoopComp = () => null;
 
 const Document = withEmotionCache(({
   children,
-  title, 
-  ExtraLinks = NoopComp, 
-  ExtraMeta = NoopComp 
+  title,
+  lang,
+  dir,
+  ExtraLinks = NoopComp,
+  ExtraMeta = NoopComp
 }: DocumentProps, emotionCache) => {
   const clientStyleData = React.useContext(ClientStyleContext);
 
@@ -37,7 +41,7 @@ const Document = withEmotionCache(({
   }, []);
 
   return (
-    <html lang="en">
+    <html lang={lang} dir={dir}>
       <head>
         {title ? <title>{title}</title> : null}
         <link
