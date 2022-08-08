@@ -1,36 +1,16 @@
-# Remix Grunge Stack
+# Remix Grunge Stack + Material UI 5 + AWS Amplify
 
-![The Remix Grunge Stack](https://repository-images.githubusercontent.com/463325363/edae4f5b-1a13-47ea-b90c-c05badc2a700)
+This repo was boot straped using ![The Remix Grunge Stack](https://repository-images.githubusercontent.com/463325363/edae4f5b-1a13-47ea-b90c-c05badc2a700) but has been modified.
 
-Learn more about [Remix Stacks](https://remix.run/stacks).
+It was also heavifily inspired in the works of [Aaron Saunders's](https://github.com/aaronksaunders/amplify-remix-todos-1), [MUI's official example](https://github.com/mui/material-ui/tree/master/examples/remix-with-typescript) and many other StackOverflow answers.
 
-```
-npx create-remix --template remix-run/grunge-stack
-```
+## What's in this stack
 
-## What's in the stack
-
-- [AWS deployment](https://aws.com) with [Architect](https://arc.codes/)
-- Production-ready [DynamoDB Database](https://aws.amazon.com/dynamodb/)
-- [GitHub Actions](https://github.com/features/actions) for deploy on merge to production and staging environments
-- Email/Password Authentication with [cookie-based sessions](https://remix.run/docs/en/v1/api/remix#createcookiesessionstorage)
-- DynamoDB access via [`arc.tables`](https://arc.codes/docs/en/reference/runtime-helpers/node.js#arc.tables)
-- End-to-end testing with [Cypress](https://cypress.io)
-- Local third party request mocking with [MSW](https://mswjs.io)
-- Unit testing with [Vitest](https://vitest.dev) and [Testing Library](https://testing-library.com)
-- Code formatting with [Prettier](https://prettier.io)
-- Linting with [ESLint](https://eslint.org)
-- Static Types with [TypeScript](https://typescriptlang.org)
-
-Not a fan of bits of the stack? Fork it, change it, and use `npx create-remix --template your/repo`! Make it your own.
+- [Material UI 5](https://mui.com/material-ui/getting-started/installation/) for the UI
+- [AWS Amplify](https://docs.amplify.aws/start/q/integration/react/?sc_icampaign=react-start&sc_ichannel=docs-home) for authentication
+- [`remix-i18next`](https://github.com/sergiodxa/remix-i18next#readme) for i18n
 
 ## Development
-
-- This step only applies if you've opted out of having the CLI install dependencies for you:
-
-   ```sh
-   npx remix init
-   ```
 
 - Validate the app has been set up properly (optional):
 
@@ -89,7 +69,8 @@ To find it on AWS, you can search for [CloudFormation](https://console.aws.amazo
 
 We use GitHub Actions for continuous integration and deployment. Anything that gets into the `main` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.
 
-## Testing
+## WIP Testing
+Probably broken as the MUI port has not been finished.
 
 ### Cypress
 
