@@ -12,3 +12,6 @@ Server Side Rendering has many benefits for UX as it really boosts performance o
 ## It's just "too new"
 One of the most common problem of new stuff: general compatibility with other tools and systems. Not many important integrations, not much StackOverflow entries, not many relevant blog posts with complex or niche scenarios and so on.
 I do believe that considering who's behind Remix, the hype, and the overall quality of the framework, this problem won't take too long to be minimized.
+
+## Serverless with Architect is cool but risky
+The Grunge Stack uses the amazing [Architect](https://arc.codes/docs/en/get-started/quickstart) framework for Functional Web Apps, which is focused on serverless technologies. I was quite impressed by its capabilities and simplicity. But I think it's risky because I found even less info, docs and examples of it. Also, other teams at Hala don't have much experience with it. Keep using [Serverless](https://www.serverless.com/) framework will be safer and more productive. Unfortunatelly, there's not much support for Remix yet as the [official example](https://github.com/serverless/cloud/tree/main/examples/remix) is barebones but there's [another good example](https://github.com/shamsup/remix-starter-serverless) that explains some limitations.
