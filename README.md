@@ -6,9 +6,10 @@ It was also heavifily inspired in the works of [Aaron Saunders's](https://github
 
 ## What's in this stack
 
-- [Material UI 5](https://mui.com/material-ui/getting-started/installation/) for the UI
+- [Material UI 5](https://mui.com/material-ui/getting-started/installation/) for the UI instead of Tailwind CSS
 - [AWS Amplify](https://docs.amplify.aws/start/q/integration/react/?sc_icampaign=react-start&sc_ichannel=docs-home) for authentication
 - [`remix-i18next`](https://github.com/sergiodxa/remix-i18next#readme) for i18n
+- Everything else that [Grunge Stack](https://github.com/remix-run/grunge-stack#whats-in-the-stack) includes
 
 ## Development
 
