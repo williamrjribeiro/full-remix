@@ -4,6 +4,8 @@ This repo was boot straped using ![The Remix Grunge Stack](https://repository-im
 
 It was also heavifily inspired in the works of [Aaron Saunders's](https://github.com/aaronksaunders/amplify-remix-todos-1), [MUI's official example](https://github.com/mui/material-ui/tree/master/examples/remix-with-typescript) and many other StackOverflow answers.
 
+**[Here](/NOTES.MD) are my personal notes about this project.**
+
 ## What's in this stack
 
 - [Material UI 5](https://mui.com/material-ui/getting-started/installation/) for the UI instead of Tailwind CSS
